@@ -46,6 +46,10 @@ class Renderer(val layer: SkiaLayer): SkiaRenderer {
         val h = (height / contentScale).toInt()
 
         // РИСОВАНИЕ
+        val temperature = PlotData(listOf("Moscow", "Saint-Petersburg"),
+                                   listOf(listOf(-7.4f, 7.1f, 20.6f, 6.1f), listOf(-5.5f, 1.5f, 15f, 4f)),
+                                "Average temperature")
+        printLine(canvas, temperature, w, h)
 
         layer.needRedraw()
     }
