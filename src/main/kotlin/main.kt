@@ -50,7 +50,13 @@ class Renderer(val layer: SkiaLayer): SkiaRenderer {
                                    listOf(listOf(-7.4f, 7.1f, 20.6f, 6.1f), listOf(-5.5f, 1.5f, 15f, 4f)),
                                 "Average temperature")
         //printLineChart(canvas, temperature,  0f, 0f, w, h)
-        printColumnChart(canvas, temperature, 0f, 0f, w, h)
+
+        val rainfall = PlotData(listOf("Moscow", "Saint-Petersburg"),
+            listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
+            listOf(listOf(52f, 41f, 35f, 37f, 50f, 80f, 85f, 82f, 68f, 71f, 55f, 52f),
+                listOf(44f,  33f, 36f, 31f, 46f, 71f, 79f, 83f, 64f, 68f, 56f, 51f)),
+            "Rainfall")
+        printStackedColumnChart(canvas, rainfall, 0f, 0f, w, h)
         layer.needRedraw()
     }
 }

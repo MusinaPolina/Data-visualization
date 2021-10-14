@@ -9,7 +9,7 @@ fun printLineChart(canvas: Canvas, plotData: PlotData, x: Float, y: Float, width
 
 private fun printLines(canvas: Canvas, chartData: ChartData) {
     val number = chartData.plotData.values[0].size
-    val shift = chartData.gridPoints.width / (number + 1)
+    val shift = chartData.gridPoints.width / number
     chartData.plotData.values.forEachIndexed { colourNumber, value ->
         printLine(canvas, chartData.gridPoints, value, chartData.valuesRange, shift, colourNumber)
     }
@@ -17,10 +17,10 @@ private fun printLines(canvas: Canvas, chartData: ChartData) {
 
 private fun printLine(canvas: Canvas, gridPoints: GridPoints,
     value: List<Float>, normal: ValuesRange, shift: Float, colourNumber: Int) {
-    var previousX = gridPoints.left + shift
+    var previousX = gridPoints.left + shift * 0.5f
     var previousY = pointPositionY(value[0], gridPoints, normal)
     value.forEachIndexed { index, it ->
-        val currentX = gridPoints.left + shift * (index + 1)
+        val currentX = gridPoints.left + shift * (index + 0.5f)
         val currentY = pointPositionY(value[index], gridPoints, normal)
         drawLine(canvas,
             previousX, previousY,

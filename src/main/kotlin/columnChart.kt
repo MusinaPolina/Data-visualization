@@ -27,14 +27,18 @@ private fun printColumn(canvas: Canvas, gridPoints: GridPoints, valueRange: Valu
                         setSize: Int, size: Int,
                         setNumber: Int, number: Int,
                         value: Float) {
+
     val setWidth = gridPoints.width / size
     val setShift = gridPoints.left +  setWidth * number
     val columnWidth = setWidth / (setSize + 1)
     val shiftX = setShift + columnWidth * (setNumber + 0.5f)
+
     val shiftY = gridPoints.height / (valueRange.number + 1)
     val range = (valueRange.number - 1) * valueRange.step
     val top = (gridPoints.height - shiftY * 2) * (value / range)
+
     val rect = Rect(shiftX, gridPoints.bottom - shiftY - top,
         shiftX + columnWidth, gridPoints.bottom - shiftY)
+
     drawRect(canvas, rect, basePaints[setNumber])
 }

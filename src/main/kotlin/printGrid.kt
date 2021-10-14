@@ -38,9 +38,9 @@ private val rowsFont = Font(typeface, rowsFontSize)
 private val rowsPoint = 5f
 
 fun printRows(canvas: Canvas, rows: List<String>, gridPoints: GridPoints) {
-    val shift = gridPoints.width / (rows.size + 1)
+    val shift = gridPoints.width / rows.size
     rows.forEachIndexed { index, name ->
-        val currentShift = gridPoints.left + shift * (index + 1)
+        val currentShift = gridPoints.left + shift * (index + 0.5f)
         val nameShift = stringCenterShift(name, rowsFontSize)
         drawString(canvas, name, currentShift - nameShift, gridPoints.bottom + rowsShift,
             rowsFont, paintBlack)
