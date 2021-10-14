@@ -56,7 +56,11 @@ class Renderer(val layer: SkiaLayer): SkiaRenderer {
             listOf(listOf(52f, 41f, 35f, 37f, 50f, 80f, 85f, 82f, 68f, 71f, 55f, 52f),
                 listOf(44f,  33f, 36f, 31f, 46f, 71f, 79f, 83f, 64f, 68f, 56f, 51f)),
             "Rainfall")
-        printNormedStackedColumnChart(canvas, rainfall, 0f, 0f, w, h)
+        //printNormedStackedColumnChart(canvas, rainfall, 0f, 0f, w, h)
+        val pie = PlotData(listOf("a", "b", "c", "d", "e"),
+            listOf(),
+            listOf(listOf(12655050f, 5384342f, 1495066f, 646468f, 1620162f)), "Pie")
+        printPieChart(canvas, pie, 0f, 0f, w, h)
         layer.needRedraw()
     }
 }
