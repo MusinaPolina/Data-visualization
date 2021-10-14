@@ -19,3 +19,7 @@ fun normalizationStackedColumn(values: List<List<Float>>): ValuesRange {
     val step: Int = Math.max(1, Math.min(all.last() / 6, all.last() / Math.max(1, (all.size - 1))).toInt())
     return ValuesRange(0, step, (kotlin.math.ceil(all.last() / step)).toInt() + 1)
 }
+
+fun normalizationNormedStackedColumn(): ValuesRange {
+    return  ValuesRange(0, 10, 11)
+}

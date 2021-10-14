@@ -6,15 +6,15 @@ fun printStackedColumnChart(canvas: Canvas, plotData: PlotData, x: Float, y: Flo
     val columns = getColumns(plotData.values)
     val chartData = ChartData(plotData, GridPoints(width, height), normalizationStackedColumn(columns))
     printGrid(canvas, chartData)
-    printColumnSets(canvas, ChartData(PlotData(plotData.categories, plotData.rows, columns, plotData.label),
-        GridPoints(width, height), normalizationStackedColumn(columns)))
+    printStackedColumnSets(canvas, chartData)
     printCategories(canvas, plotData.categories, chartData.gridPoints)
 }
 
 
-private fun printColumnSets(canvas: Canvas, chartData: ChartData) {
-    chartData.plotData.values.forEachIndexed { index, it ->
-        printColumn(canvas, chartData, it, index, chartData.plotData.values.size)
+fun printStackedColumnSets(canvas: Canvas, chartData: ChartData) {
+    val column = getColumns(chartData.plotData.values)
+    column.forEachIndexed { index, it ->
+        printColumn(canvas, chartData, it, index, column.size)
     }
 }
 
