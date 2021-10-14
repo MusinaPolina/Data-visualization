@@ -1,5 +1,6 @@
 import org.jetbrains.skija.Canvas
 import org.jetbrains.skija.Font
+import java.lang.Float.min
 
 fun printGrid(canvas: Canvas, chartData: ChartData) {
     printAxes(canvas, chartData.gridPoints)
@@ -13,7 +14,7 @@ fun printAxes(canvas: Canvas, gridPoints: GridPoints) {
     drawLine(canvas, gridPoints.left, gridPoints.bottom, gridPoints.right, gridPoints.bottom, paintBlack)
 }
 
-private val rangeShift = 40f
+private val rangeShift = 0.3f
 private val rangeFont = Font(typeface, 15f)
 private val rangeNameShift = 5f
 
@@ -22,8 +23,9 @@ fun printRange(canvas: Canvas, valueRange: ValuesRange, gridPoints: GridPoints) 
     repeat(valueRange.number) { index ->
         val currentShift = gridPoints.bottom - shift * (index + 1)
         val currentNumber = valueRange.start + valueRange.step * index
+        val xShift =  min((gridPoints.originalWidth - gridPoints.width) * 0.5f * rangeShift, 40f)
         drawString(canvas, currentNumber.toString(),
-            gridPoints.left - rangeShift, currentShift + rangeNameShift,
+            gridPoints.left - xShift, currentShift + rangeNameShift,
             rangeFont, paintBlack)
         drawLine(canvas,gridPoints.left, currentShift,
             gridPoints.right, currentShift, paintGrey)

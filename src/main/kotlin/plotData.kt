@@ -6,7 +6,7 @@ val shiftCoefficientRight = 1 - shiftCoefficientLeft
 val shiftCoefficientTop = 0.15f
 val shiftCoefficientBottom = 1 - shiftCoefficientTop
 
-data class GridPoints(private val originalWidth: Int, private val originalHeight: Int) {
+data class GridPoints(val originalWidth: Int, val originalHeight: Int) {
     val left: Float = originalWidth.toFloat() * shiftCoefficientLeft
     val bottom: Float = originalHeight.toFloat() * shiftCoefficientBottom
     val right: Float = originalWidth.toFloat() * shiftCoefficientRight

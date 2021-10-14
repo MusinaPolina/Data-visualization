@@ -1,6 +1,7 @@
 import org.jetbrains.skija.Canvas
 
-fun printLineChart(canvas: Canvas, plotData: PlotData, width: Int, height: Int) {
+fun printLineChart(canvas: Canvas, plotData: PlotData, x: Float, y: Float, width: Int, height: Int) {
+    setShift(x, y)
     val chartData = ChartData(plotData, GridPoints(width, height), normalization(plotData.values))
     printGrid(canvas, chartData)
     printLines(canvas, chartData)

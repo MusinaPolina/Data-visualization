@@ -49,8 +49,8 @@ class Renderer(val layer: SkiaLayer): SkiaRenderer {
         val temperature = PlotData(listOf("Moscow", "Saint-Petersburg"), listOf("Jan", "Apr", "Jul", "Oct"),
                                    listOf(listOf(-7.4f, 7.1f, 20.6f, 6.1f), listOf(-5.5f, 1.5f, 15f, 4f)),
                                 "Average temperature")
-        printLineChart(canvas, temperature, w, h)
-
+        printLineChart(canvas, temperature, 150f, 150f, (w * 0.9).toInt(), (h * 0.8).toInt())
+        //aprintColumnChart(canvas, temperature, 0f, 0f, w, h)
         layer.needRedraw()
     }
 }

@@ -2,7 +2,7 @@ import org.jetbrains.skija.Canvas
 import org.jetbrains.skija.Font
 import org.jetbrains.skija.Rect
 
-private val categoriesShift = 50f
+private val categoriesShift = 0.6f
 private val categoriesFontSize = 15f
 private val font = Font(typeface, categoriesFontSize)
 
@@ -10,7 +10,7 @@ fun printCategories(canvas: Canvas, categories: List<String>, gridPoints: GridPo
     val line = categoriesLine(categories)
     val center = gridPoints.left + gridPoints.width * 0.5f
     val start = center - stringCenterShift(line, categoriesFontSize)
-    val y = gridPoints.bottom + categoriesShift
+    val y = gridPoints.bottom + (gridPoints.originalHeight - gridPoints.height) * 0.5f * categoriesShift
     drawString(canvas, line, start, y, font, paintBlack)
 
     val scaledShift = categoriesFontSize * typefaceCoefficient
