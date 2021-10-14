@@ -15,5 +15,4 @@ fun printNormedStackedColumnChart(canvas: Canvas, plotData: PlotData, x: Float, 
 
     printGrid(canvas, chartData)
     printStackedColumnSets(canvas, chartData)
-    printCategories(canvas, plotData.categories, chartData.gridPoints)
 }

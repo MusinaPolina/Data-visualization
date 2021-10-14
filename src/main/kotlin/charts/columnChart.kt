@@ -6,7 +6,6 @@ fun printColumnChart(canvas: Canvas, plotData: PlotData, x: Float, y: Float, wid
     val chartData = ChartData(plotData, GridPoints(width, height), normalizationColumn(plotData.values))
     printGrid(canvas, chartData)
     printColumnSets(canvas, chartData)
-    printCategories(canvas, plotData.categories, chartData.gridPoints)
 }
 
 private fun printColumnSets(canvas: Canvas, chartData: ChartData) {

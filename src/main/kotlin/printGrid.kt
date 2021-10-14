@@ -6,7 +6,7 @@ fun printGrid(canvas: Canvas, chartData: ChartData) {
     printAxes(canvas, chartData.gridPoints)
     printRows(canvas, chartData.plotData.rows, chartData.gridPoints)
     printRange(canvas, chartData.valuesRange, chartData.gridPoints)
-    printCategories(canvas, chartData.plotData.categories, chartData.gridPoints)
+    printCategories(canvas, chartData.gridPoints, chartData.plotData.categories, chartData.plotData.label)
 }
 
 fun printAxes(canvas: Canvas, gridPoints: GridPoints) {
