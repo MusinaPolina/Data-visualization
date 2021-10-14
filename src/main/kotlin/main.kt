@@ -2,16 +2,25 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.swing.Swing
 import org.jetbrains.skija.*
+import org.jetbrains.skija.Canvas
+import org.jetbrains.skija.Font
+import org.jetbrains.skija.Paint
 import org.jetbrains.skiko.SkiaLayer
 import org.jetbrains.skiko.SkiaRenderer
 import org.jetbrains.skiko.SkiaWindow
-import java.awt.Dimension
+import java.awt.*
+import java.awt.event.KeyAdapter
+import java.awt.event.KeyEvent
 import java.awt.event.MouseEvent
 import java.awt.event.MouseMotionAdapter
+import java.lang.Math.*
+import javax.swing.JFileChooser
 import javax.swing.WindowConstants
+import kotlin.math.nextUp
+
 
 fun main() {
-    createWindow("pf-2021-viz")
+    createWindow("diagram manager")
 }
 
 fun createWindow(title: String) = runBlocking(Dispatchers.Swing) {
@@ -30,14 +39,6 @@ fun createWindow(title: String) = runBlocking(Dispatchers.Swing) {
 }
 
 class Renderer(val layer: SkiaLayer): SkiaRenderer {
-    val typeface = Typeface.makeFromFile("fonts/JetBrainsMono-Regular.ttf")
-    val font = Font(typeface, 40f)
-    val paint = Paint().apply {
-        color = 0xff9BC730L.toInt()
-        mode = PaintMode.FILL
-        strokeWidth = 1f
-    }
-
     override fun onRender(canvas: Canvas, width: Int, height: Int, nanoTime: Long) {
         val contentScale = layer.contentScale
         canvas.scale(contentScale, contentScale)
