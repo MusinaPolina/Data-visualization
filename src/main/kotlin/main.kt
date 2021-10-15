@@ -38,14 +38,36 @@ fun createWindow(title: String) = runBlocking(Dispatchers.Swing) {
 }
 
 val buttons: MutableList<Button> = mutableListOf()
-val buttonOpenFile = Button("open file", 100f, 100f, 200f, 150f)
+val buttonOpenFile = Button("open file", 100f, 100f, 200f, 125f)
 
+val buttonColumnChart = Button("column", 100f, 200f, 250f, 225f)
+val buttonStackedColumnChart = Button("stacked column", 100f, 250f, 250f, 275f)
+val buttonNormedStackedColumnChart = Button("100% stacked column", 100f, 300f, 250f, 325f)
+val buttonPieChart = Button("pie", 100f, 350f, 250f, 375f)
+val buttonLineChart = Button("line",  100f, 400f, 250f, 425f)
+val chartButtons = listOf(
+    buttonColumnChart,
+    buttonStackedColumnChart,
+    buttonNormedStackedColumnChart,
+    buttonPieChart,
+    buttonLineChart
+)
+var currentChoosen = buttonColumnChart
 
 class Renderer(val layer: SkiaLayer): SkiaRenderer {
 
     private fun printButtons(canvas: Canvas, width: Int, height: Int) {
         buttons.forEach {
+            it.setChoosen(currentChoosen == it)
             it.print(canvas, width, height)
+        }
+    }
+
+    private fun updateChartButtons() {
+        chartButtons.forEach {
+            if (it.clicked()) {
+                currentChoosen = it
+            }
         }
     }
 
@@ -55,15 +77,14 @@ class Renderer(val layer: SkiaLayer): SkiaRenderer {
         val w = (width / contentScale).toInt()
         val h = (height / contentScale).toInt()
         printButtons(canvas, w, h)
-        if (buttonOpenFile.clicked()) {
-            buttonOpenFile.visible(false)
+        updateChartButtons()
+/*        if (buttonOpenFile.clicked()) {
+            buttonOpenFile.setVisible(false)
             readFile()
-        }
+        }*/
         layer.needRedraw()
     }
 }
-
-
 
 object State {
     var mouseX = 0f

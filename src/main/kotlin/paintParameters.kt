@@ -21,6 +21,12 @@ val paintGrey = Paint().apply {
     strokeWidth = 1f
 }
 
+val paintPink = Paint().apply {
+    color = 0xffE9967A.toInt()
+    mode = PaintMode.FILL
+    strokeWidth = 1f
+}
+
 val paintWhite = Paint().apply {
     color = 0xffFFFFFF.toInt()
     mode = PaintMode.FILL
