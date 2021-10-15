@@ -57,10 +57,13 @@ class Renderer(val layer: SkiaLayer): SkiaRenderer {
         printButtons(canvas, w, h)
         if (buttonOpenFile.clicked()) {
             buttonOpenFile.visible(false)
+            readFile()
         }
         layer.needRedraw()
     }
 }
+
+
 
 object State {
     var mouseX = 0f
