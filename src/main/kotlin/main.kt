@@ -43,18 +43,18 @@ val buttonOpenFile = Button("open file", 100f, 100f, 200f, 150f)
 
 class Renderer(val layer: SkiaLayer): SkiaRenderer {
 
-    private fun printButtons(canvas: Canvas) {
+    private fun printButtons(canvas: Canvas, width: Int, height: Int) {
         buttons.forEach {
-            it.print(canvas)
+            it.print(canvas, width, height)
         }
     }
 
     override fun onRender(canvas: Canvas, width: Int, height: Int, nanoTime: Long) {
         val contentScale = layer.contentScale
         canvas.scale(contentScale, contentScale)
-        printButtons(canvas)
-        /*val w = (width / contentScale).toInt()
-        val h = (height / contentScale).toInt()*/
+        val w = (width / contentScale).toInt()
+        val h = (height / contentScale).toInt()
+        printButtons(canvas, w, h)
         if (buttonOpenFile.clicked()) {
             buttonOpenFile.visible(false)
         }

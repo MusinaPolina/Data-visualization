@@ -3,18 +3,36 @@ import org.jetbrains.skija.Font
 import org.jetbrains.skija.Rect
 
 class Button( val label: String,
-             val x0: Float, val y0: Float, val x1: Float, val y1: Float) {
+             val stx0: Float, val sty0: Float, val stx1: Float, val sty1: Float) {
     init {
         buttons.add(this)
     }
+    private var x0 = stx0
+    private var y0 = sty0
+    private var x1 = stx1
+    private var y1 = sty1
+    private val originalWidth = 800f
+    private val originalHeight = 600f
     private var isVisible: Boolean = true
     private val eps = 1f
-    private val fontSize = (y1 - y0) * 0.3f
-    private val font = Font(typeface, fontSize)
+    private var fontSize = (y1 - y0) * 0.3f
+    private var font = Font(typeface, fontSize)
 
     fun visible(state: Boolean) { isVisible = state }
 
-    fun print(canvas: Canvas) {
+    private fun set(width: Int, height: Int) {
+        val cWidth = width.toFloat() / originalWidth
+        val cHeight = height.toFloat() / originalHeight
+        x0 = stx0 * cWidth
+        y0 = sty0 * cHeight
+        x1 = stx1 * cWidth
+        y1 = sty1 * cHeight
+        fontSize = (y1 - y0) * 0.3f
+        font = Font(typeface, fontSize)
+    }
+
+    fun print(canvas: Canvas, width: Int, height: Int) {
+        set(width, height)
         if (isVisible) {
             printRect(canvas)
             printLabel(canvas)
