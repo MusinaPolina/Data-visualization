@@ -9,11 +9,9 @@ import org.jetbrains.skiko.SkiaLayer
 import org.jetbrains.skiko.SkiaRenderer
 import org.jetbrains.skiko.SkiaWindow
 import java.awt.*
-import java.awt.event.KeyAdapter
-import java.awt.event.KeyEvent
-import java.awt.event.MouseEvent
-import java.awt.event.MouseMotionAdapter
+import java.awt.event.*
 import java.lang.Math.*
+import javax.management.InstanceAlreadyExistsException
 import javax.swing.JFileChooser
 import javax.swing.WindowConstants
 import kotlin.math.nextUp
@@ -30,6 +28,7 @@ fun createWindow(title: String) = runBlocking(Dispatchers.Swing) {
 
     window.layer.renderer = Renderer(window.layer)
     window.layer.addMouseMotionListener(MyMouseMotionAdapter)
+    window.layer.addMouseListener(MyMouseAdapter)
 
     window.preferredSize = Dimension(800, 600)
     window.minimumSize = Dimension(100,100)
@@ -38,29 +37,27 @@ fun createWindow(title: String) = runBlocking(Dispatchers.Swing) {
     window.isVisible = true
 }
 
+val buttons: MutableList<Button> = mutableListOf()
+val buttonOpenFile = Button("open file", 100f, 100f, 200f, 150f)
+
+
 class Renderer(val layer: SkiaLayer): SkiaRenderer {
+
+    private fun printButtons(canvas: Canvas) {
+        buttons.forEach {
+            it.print(canvas)
+        }
+    }
+
     override fun onRender(canvas: Canvas, width: Int, height: Int, nanoTime: Long) {
         val contentScale = layer.contentScale
         canvas.scale(contentScale, contentScale)
-        val w = (width / contentScale).toInt()
-        val h = (height / contentScale).toInt()
-
-        // РИСОВАНИЕ
-        val temperature = PlotData(listOf("Moscow", "Saint-Petersburg"), listOf("Jan", "Apr", "Jul", "Oct"),
-                                   listOf(listOf(-7.4f, 7.1f, 20.6f, 6.1f), listOf(-5.5f, 1.5f, 15f, 4f)),
-                                "Average temperature")
-        //printLineChart(canvas, temperature,  0f, 0f, w, h)
-
-        val rainfall = PlotData(listOf("Moscow", "Saint-Petersburg"),
-            listOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
-            listOf(listOf(52f, 41f, 35f, 37f, 50f, 80f, 85f, 82f, 68f, 71f, 55f, 52f),
-                listOf(44f,  33f, 36f, 31f, 46f, 71f, 79f, 83f, 64f, 68f, 56f, 51f)),
-            "Rainfall")
-        //printNormedStackedColumnChart(canvas, rainfall, 0f, 0f, w, h)
-        val pie = PlotData(listOf("a", "b", "c", "d", "e"),
-            listOf(),
-            listOf(listOf(12655050f, 5384342f, 1495066f, 646468f, 1620162f)), "Pie")
-        printPieChart(canvas, pie, 0f, 0f, w, h)
+        printButtons(canvas)
+        /*val w = (width / contentScale).toInt()
+        val h = (height / contentScale).toInt()*/
+        if (buttonOpenFile.clicked()) {
+            buttonOpenFile.visible(false)
+        }
         layer.needRedraw()
     }
 }
@@ -68,11 +65,18 @@ class Renderer(val layer: SkiaLayer): SkiaRenderer {
 object State {
     var mouseX = 0f
     var mouseY = 0f
+    var clickCount = 0
 }
 
 object MyMouseMotionAdapter : MouseMotionAdapter() {
     override fun mouseMoved(event: MouseEvent) {
         State.mouseX = event.x.toFloat()
         State.mouseY = event.y.toFloat()
+    }
+}
+
+object MyMouseAdapter : MouseAdapter() {
+    override fun mouseClicked(event: MouseEvent) {
+        State.clickCount += event.clickCount
     }
 }
