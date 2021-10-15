@@ -3,6 +3,11 @@ import org.jetbrains.skija.Paint
 import org.jetbrains.skija.Font
 import org.jetbrains.skija.Rect
 
+object Shift {
+    var xShift: Float = 0f
+    var yShift: Float = 0f
+}
+
 fun setShift(x: Float, y: Float) {
     Shift.xShift = x
     Shift.yShift = y
@@ -23,7 +28,9 @@ fun drawRect(canvas: Canvas, rect: Rect, paint: Paint) {
     canvas.drawRect(currentRect, paint)
 }
 
-object Shift {
-    var xShift: Float = 0f
-    var yShift: Float = 0f
+fun drawArc(canvas: Canvas, left: Float, top: Float, right: Float, bottom: Float,
+            startAngel: Float, sweepAngel: Float, includeCenter: Boolean, paint: Paint) {
+    canvas.drawArc(left + Shift.xShift, top + Shift.yShift,
+        right + Shift.xShift, bottom + Shift.yShift,
+        startAngel, sweepAngel, includeCenter, paint)
 }

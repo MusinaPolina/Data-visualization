@@ -5,6 +5,7 @@ fun printLineChart(canvas: Canvas, plotData: PlotData, x: Float, y: Float, width
     val chartData = ChartData(plotData, GridPoints(width, height), normalizationLine(plotData.values))
     printGrid(canvas, chartData)
     printLines(canvas, chartData)
+    setShift(0f, 0f)
 }
 
 private fun printLines(canvas: Canvas, chartData: ChartData) {

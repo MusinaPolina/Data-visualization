@@ -7,6 +7,7 @@ fun printStackedColumnChart(canvas: Canvas, plotData: PlotData, x: Float, y: Flo
     val chartData = ChartData(plotData, GridPoints(width, height), normalizationStackedColumn(columns))
     printGrid(canvas, chartData)
     printStackedColumnSets(canvas, chartData)
+    setShift(0f, 0f)
 }
 
 

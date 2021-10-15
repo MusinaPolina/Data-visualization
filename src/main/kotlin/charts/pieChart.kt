@@ -5,7 +5,8 @@ fun printPieChart(canvas: Canvas, plotData: PlotData, x: Float, y: Float, width:
     setShift(x, y)
     val gridPoints = GridPoints(width, height)
     printCategories(canvas, gridPoints, plotData.categories, plotData.label)
-    printPie(canvas, gridPoints, plotData.values[0])
+    printPie(canvas, gridPoints, plotData.values.flatten())
+    setShift(0f, 0f)
 }
 
 fun printPie(canvas: Canvas, gridPoints: GridPoints, values: List<Float>) {
@@ -22,7 +23,8 @@ val radiusCofficient = 0.35f
 fun printSector(canvas: Canvas, gridPoints: GridPoints, left: Float, right: Float, paint: Paint) {
     val center = Pair(gridPoints.originalWidth * 0.5f, gridPoints.originalHeight * 0.5f)
     val shift = gridPoints.originalHeight * radiusCofficient
-    canvas.drawArc(center.first - shift, center.second - shift,
+    drawArc(canvas,center.first - shift, center.second - shift,
         center.first + shift, center.second + shift,
         left * 360f, right * 360f, true, paint)
 }
+
