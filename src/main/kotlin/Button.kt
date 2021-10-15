@@ -8,7 +8,7 @@ class Button(val label: String,
     init {
         buttons.add(this)
     }
-    private var choosen: Boolean= false
+    var clicked: Boolean = false
     private var visible: Boolean = true
     private var x0 = stx0
     private var y0 = sty0
@@ -21,7 +21,7 @@ class Button(val label: String,
     private var font = Font(typeface, fontSize)
 
     fun setVisible(state: Boolean) { visible = state }
-    fun setChoosen(state: Boolean) { choosen = state }
+    fun setChoosen(state: Boolean) { clicked = state }
 
     private fun set(width: Int, height: Int) {
         val cWidth = width.toFloat() / originalWidth
@@ -50,7 +50,7 @@ class Button(val label: String,
 
     private fun printRect(canvas: Canvas) {
         val paint = when {
-            choosen -> paintPink
+            clicked -> paintPink
             checkMouse() -> paintGrey
             else -> paintWhite
         }

@@ -38,13 +38,13 @@ fun createWindow(title: String) = runBlocking(Dispatchers.Swing) {
 }
 
 val buttons: MutableList<Button> = mutableListOf()
-val buttonOpenFile = Button("open file", 100f, 100f, 200f, 125f)
+val buttonOpenFile = Button("open file", 50f, 50f, 150f, 75f)
 
-val buttonColumnChart = Button("column", 100f, 200f, 250f, 225f)
-val buttonStackedColumnChart = Button("stacked column", 100f, 250f, 250f, 275f)
-val buttonNormedStackedColumnChart = Button("100% stacked column", 100f, 300f, 250f, 325f)
-val buttonPieChart = Button("pie", 100f, 350f, 250f, 375f)
-val buttonLineChart = Button("line",  100f, 400f, 250f, 425f)
+val buttonColumnChart = Button("column", 50f, 200f, 200f, 225f)
+val buttonStackedColumnChart = Button("stacked column", 50f, 250f, 200f, 275f)
+val buttonNormedStackedColumnChart = Button("100% stacked column", 50f, 300f, 200f, 325f)
+val buttonPieChart = Button("pie", 50f, 350f, 200f, 375f)
+val buttonLineChart = Button("line",  50f, 400f, 200f, 425f)
 val chartButtons = listOf(
     buttonColumnChart,
     buttonStackedColumnChart,
@@ -71,6 +71,16 @@ class Renderer(val layer: SkiaLayer): SkiaRenderer {
         }
     }
 
+    private fun printChart(canvas: Canvas, w: Int, h: Int) {
+        when (currentChoosen) {
+            buttonColumnChart -> columnChart(canvas, w, h)
+            buttonStackedColumnChart -> stackedColumnChart(canvas, w, h)
+            buttonNormedStackedColumnChart -> normedStackedColumnChart(canvas, w, h)
+            buttonPieChart -> pieChart(canvas, w, h)
+            buttonLineChart -> lineChart(canvas, w, h)
+        }
+    }
+
     override fun onRender(canvas: Canvas, width: Int, height: Int, nanoTime: Long) {
         val contentScale = layer.contentScale
         canvas.scale(contentScale, contentScale)
@@ -78,6 +88,7 @@ class Renderer(val layer: SkiaLayer): SkiaRenderer {
         val h = (height / contentScale).toInt()
         printButtons(canvas, w, h)
         updateChartButtons()
+        printChart(canvas, w, h)
 /*        if (buttonOpenFile.clicked()) {
             buttonOpenFile.setVisible(false)
             readFile()

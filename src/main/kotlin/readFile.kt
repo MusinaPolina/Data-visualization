@@ -21,11 +21,7 @@ fun getLink(): String? {
     return null
 }
 
-fun readFile(): PlotData? {
-    val link = getLink().toString()
-    if (link.isEmpty())
-        return null
-    println()
+fun readFile(link: String): PlotData? {
     return when (link.substring(link.length - 4)) {
         ".txt" -> parseTxt(link)
         ".csv" -> parseCsv(link)
@@ -33,7 +29,7 @@ fun readFile(): PlotData? {
     }
 }
 
-fun parseCsv(link: String): PlotData? {
+fun parseCsv(link: String): PlotData {
     val reader = Files.newBufferedReader(Paths.get(link))
     val csvParser = CSVParser(reader, CSVFormat.DEFAULT
         .withFirstRecordAsHeader()
@@ -42,19 +38,22 @@ fun parseCsv(link: String): PlotData? {
     return csvPlotData(csvParser)
 }
 
-fun csvPlotData(csvParser: CSVParser): PlotData? {
-    val categories = mutableListOf<String>()
-    val values = mutableListOf<List<Float>>()
+fun csvPlotData(csvParser: CSVParser): PlotData {
+    val rows = mutableListOf<String>()
+
     val headerList = csvParser.headerMap.toList().sortedBy { it.second }.map { it.first }
     val label = headerList[0]
-    val rows: List< String > = headerList.drop(0)
+    val categories: List< String > = headerList.drop(1)
+    val values = MutableList(categories.size) { MutableList(0) { 0f } }
     csvParser.forEach { record ->
-        categories.add(record.get(0).toString())
-        values.add(record.toList().drop(1).map { it.toFloat() })
+        rows.add(record.get(0).toString())
+        categories.forEachIndexed { index, it ->
+            values[index].add(record.get(it).toFloat())
+        }
     }
     return PlotData(categories, rows, values, label)
 }
 
-fun parseTxt(link: String): PlotData? {
+fun parseTxt(link: String): PlotData {
     TODO()
 }
