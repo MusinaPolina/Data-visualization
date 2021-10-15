@@ -21,6 +21,11 @@ fun getLink(): String? {
     return null
 }
 
+fun setUserLink() {
+    userLink = getLink()!!
+    useDefaultLink = false
+}
+
 fun readFile(link: String): PlotData? {
     return when (link.substring(link.length - 4)) {
         ".txt" -> parseTxt(link)

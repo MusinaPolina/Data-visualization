@@ -11,6 +11,8 @@ import org.jetbrains.skiko.SkiaWindow
 import java.awt.*
 import java.awt.event.*
 import java.lang.Math.*
+import java.nio.file.Files
+import java.nio.file.Path.of
 import javax.management.InstanceAlreadyExistsException
 import javax.swing.JFileChooser
 import javax.swing.WindowConstants
@@ -39,6 +41,7 @@ fun createWindow(title: String) = runBlocking(Dispatchers.Swing) {
 
 val buttons: MutableList<Button> = mutableListOf()
 val buttonOpenFile = Button("open file", 50f, 50f, 150f, 75f)
+val buttonSaveFile = Button("save file", 200f, 50f, 300f, 75f)
 
 val buttonColumnChart = Button("column", 50f, 200f, 200f, 225f)
 val buttonStackedColumnChart = Button("stacked column", 50f, 250f, 200f, 275f)
@@ -71,14 +74,24 @@ class Renderer(val layer: SkiaLayer): SkiaRenderer {
         }
     }
 
-    private fun printChart(canvas: Canvas, w: Int, h: Int) {
+    private fun printChart(canvas: Canvas, w: Int, h: Int, xShift: Float = 200f, yShift: Float = 100f) {
         when (currentChoosen) {
-            buttonColumnChart -> columnChart(canvas, w, h)
-            buttonStackedColumnChart -> stackedColumnChart(canvas, w, h)
-            buttonNormedStackedColumnChart -> normedStackedColumnChart(canvas, w, h)
-            buttonPieChart -> pieChart(canvas, w, h)
-            buttonLineChart -> lineChart(canvas, w, h)
+            buttonColumnChart -> columnChart(canvas, w, h, xShift, yShift)
+            buttonStackedColumnChart -> stackedColumnChart(canvas, w, h, xShift, yShift)
+            buttonNormedStackedColumnChart -> normedStackedColumnChart(canvas, w, h, xShift, yShift)
+            buttonPieChart -> pieChart(canvas, w, h, xShift, yShift)
+            buttonLineChart -> lineChart(canvas, w, h, xShift, yShift)
         }
+    }
+
+    private fun saveFile() {
+        val w = 800
+        val h = 600
+        val surface = Surface.makeRasterN32Premul(w, h)
+        val canvasFile = surface.canvas
+        printChart(canvasFile, w, h, 0f, 0f)
+        val pngBytes = surface.makeImageSnapshot().encodeToData()!!.bytes
+        Files.write(of("output.png"), pngBytes)
     }
 
     override fun onRender(canvas: Canvas, width: Int, height: Int, nanoTime: Long) {
@@ -89,10 +102,12 @@ class Renderer(val layer: SkiaLayer): SkiaRenderer {
         printButtons(canvas, w, h)
         updateChartButtons()
         printChart(canvas, w, h)
-/*        if (buttonOpenFile.clicked()) {
-            buttonOpenFile.setVisible(false)
-            readFile()
-        }*/
+        if (buttonOpenFile.clicked()) {
+            setUserLink()
+        }
+        if (buttonSaveFile.clicked()) {
+            saveFile()
+        }
         layer.needRedraw()
     }
 }
