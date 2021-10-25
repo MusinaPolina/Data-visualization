@@ -1,10 +1,11 @@
 import org.jetbrains.skija.Canvas
+import java.io.File
 
 var userLink = ""
 var useDefaultLink = true
 
 fun defaultLink(name: String): String {
-    return "defaultCharts\\$name.csv"
+    return "defaultCharts${File.separatorChar}$name.csv"
 }
 
 val defaultWidth = 600
