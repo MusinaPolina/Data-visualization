@@ -1,11 +1,15 @@
-# Курс основ программирования на МКН СПбГУ
-## Проект 3: визуализация данных
+# Basics of programming course: data visualization, plots
 
-Выберите один из возможных типов диаграмм и загрузите ваши данные в следующем формате:
+Select one of the diagram types and download your data in a following format: \
++ CSV file
++ First line is a name of the diagram and legend (no more than 6 elements)
++ Next lines are the name of the parameter and values
 
-CSV файл
-Первая строка задает название диаграммы и легенду, не более 6 элементов
-Последующие название параметра и значения
+Example:
+```
+Name, a, b, c
+par1, 31, 0, 4
+par2, 23, 10, 10
+```
 
-Диаграмма сохранится в output.png в корне проекта
-[Постановка задачи](./TASK.md)
+Diagram is saved in the `output.png` in the root of the project
