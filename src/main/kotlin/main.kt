@@ -89,6 +89,8 @@ class Renderer(val layer: SkiaLayer): SkiaRenderer {
         val h = 600
         val surface = Surface.makeRasterN32Premul(w, h)
         val canvasFile = surface.canvas
+        val background = Rect(0.0f, 0.0f, defaultWidth.toFloat(), defaultHeight.toFloat())
+        canvasFile.drawRect(background, paintWhite)
         printChart(canvasFile, w, h, 0f, 0f)
         val pngBytes = surface.makeImageSnapshot().encodeToData()!!.bytes
         Files.write(of("output.png"), pngBytes)

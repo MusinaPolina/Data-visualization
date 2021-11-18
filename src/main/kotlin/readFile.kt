@@ -22,10 +22,7 @@ fun getLink(): String? {
 }
 
 fun setUserLink() {
-    val link = getLink()
-    if (link == null) {
-        return
-    }
+    val link = getLink() ?: return
     userLink = link
     useDefaultLink = false
 }
